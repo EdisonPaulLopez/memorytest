@@ -1,0 +1,48 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity memory is
+	
+	port
+	(
+		-- Input ports
+		address, data_in	: in  std_logic_vector (7 downto 0);
+		port_in_00, port_in_01, port_in_02, port_in_03,
+		port_in_04, port_in_05, port_in_06, port_in_07,
+		port_in_08, port_in_09, port_in_10, port_in_11,
+		port_in_12, port_in_13, port_in_14, port_in_15  : in std_logic_vector(7 downto 0);
+		clock, reset, writen : in std_logic;
+
+		-- Output ports
+		data_out, port_out_00, port_out_01	: out std_logic_vector(7 downto 0)
+	);
+end memory;
+
+
+architecture arch_memory of memory is
+
+
+component romsync_128x8 
+
+port
+(
+-- Input ports
+address : in  std_logic_vector(7 downto 0);
+clock      : in  std_logic;
+
+-- Output ports
+data_out : out std_logic_vector(7 downto 0)
+
+);
+end component;
+
+	signal S0, S1 : std_logic_vector(7 downto 0);
+
+begin
+	
+	U0 : romsync_128x8 port map (address, clock, S0);
+	
+
+end arch_memory;
+
